@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Password Protected Page</title>
+  <title>Calculator</title>
   <style>
-    /* General styles */
     body, html {
       display: flex;
       justify-content: center;
@@ -14,75 +13,136 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
-      overflow: hidden;
     }
-    .content-container {
-      width: 90%;
-      max-width: 600px;
-      margin: auto;
+    .calculator {
+      background-color: #ffffff;
       padding: 20px;
-      overflow-y: auto;
-      max-height: 90vh;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       border-radius: 8px;
-      background-color: #ffffff;
+      width: 200px;
     }
-    input[type="password"] {
-      padding: 10px;
-      font-size: 16px;
+    .display {
       width: 100%;
-      box-sizing: border-box;
+      height: 50px;
+      text-align: right;
+      font-size: 24px;
+      padding: 5px;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: #ffffff;
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+    .button {
+      padding: 15px;
+      font-size: 18px;
       background-color: #007bff;
+      color: #ffffff;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
-    button:hover {
+    .button:active {
       background-color: #0056b3;
     }
-    .error {
-      color: red;
-      display: none;
+    .login-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
     }
-    .hidden-content {
+    .password-container {
       display: none;
+      text-align: center;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    .enter-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #ffffff;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<div class="content-container password-container">
-  <h2>Enter Password</h2>
-  <input type="password" id="passwordInput" placeholder="Password">
-  <button onclick="checkPassword()">Enter</button>
-  <p id="error" class="error">Incorrect password. Try again.</p>
+<div class="login-button" onclick="showPasswordPage()">Login</div>
+
+<div class="calculator" id="calculatorPage">
+  <input type="text" class="display" id="display" readonly>
+  <div class="buttons">
+    <button class="button" onclick="appendToDisplay('7')">7</button>
+    <button class="button" onclick="appendToDisplay('8')">8</button>
+    <button class="button" onclick="appendToDisplay('9')">9</button>
+    <button class="button" onclick="appendToDisplay('/')">/</button>
+    <button class="button" onclick="appendToDisplay('4')">4</button>
+    <button class="button" onclick="appendToDisplay('5')">5</button>
+    <button class="button" onclick="appendToDisplay('6')">6</button>
+    <button class="button" onclick="appendToDisplay('*')">*</button>
+    <button class="button" onclick="appendToDisplay('1')">1</button>
+    <button class="button" onclick="appendToDisplay('2')">2</button>
+    <button class="button" onclick="appendToDisplay('3')">3</button>
+    <button class="button" onclick="appendToDisplay('-')">-</button>
+    <button class="button" onclick="appendToDisplay('0')">0</button>
+    <button class="button" onclick="appendToDisplay('.')">.</button>
+    <button class="button" onclick="calculate()">=</button>
+    <button class="button" onclick="appendToDisplay('+')">+</button>
+  </div>
 </div>
 
-<div id="protectedContent" class="content-container hidden-content">
-  <!-- Original Twitter embeds -->
-  <blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Man wants x with a child but says he won’t do it again.<br>Full video on locals.<br>Website coming soon for those who can’t access Locals / <a href="https://t.co/A9akhMUpLv">https://t.co/A9akhMUpLv</a> <a href="https://t.co/IBOylESiXc">pic.twitter.com/IBOylESiXc</a></p>&mdash; JayCarnicomDAP (@jaycarnicomdap) <a href="https://twitter.com/jaycarnicomdap/status/1849197425845530926?ref_src=twsrc%5Etfw">October 23, 2024</a></blockquote>
-  <blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Trying to meet a lil kid for x but gets slapped and tossed away<br>Full video on locals <a href="https://t.co/26TaHp99lZ">https://t.co/26TaHp99lZ</a><br>Message me if locals doesn’t work for you <a href="https://t.co/gEQ49E8jD2">pic.twitter.com/gEQ49E8jD2</a></p>&mdash; JayCarnicomDAP (@jaycarnicomdap) <a href="https://twitter.com/jaycarnicomdap/status/1843731155495071988?ref_src=twsrc%5Etfw">October 8, 2024</a></blockquote>
-  <blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Kaleef was trying to make a lil grl his gf and was nasty in them chats. <br>Full video on Locals. ‼️<br>Other options to view coming soon. <a href="https://t.co/lmZ3LSzqlY">pic.twitter.com/lmZ3LSzqlY</a></p>&mdash; JayCarnicomDAP (@jaycarnicomdap) <a href="https://twitter.com/jaycarnicomdap/status/1839333106450620478?ref_src=twsrc%5Etfw">September 26, 2024</a></blockquote>
-  <blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Pred*phile wanted to meet a child at the park for x <br>Full video on my locals<a href="https://t.co/26TaHp99lZ">https://t.co/26TaHp99lZ</a> <a href="https://t.co/9UoiYbKe2l">pic.twitter.com/9UoiYbKe2l</a></p>&mdash; JayCarnicomDAP (@jaycarnicomdap) <a href="https://twitter.com/jaycarnicomdap/status/1832126699347353872?ref_src=twsrc%5Etfw">September 6, 2024</a></blockquote>
-  <blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">Man wants to meet a young bo at the park for ex<br> Join locals to see the full videos (link in bio)<br>If Locals doesn’t work for you cause your in Brazil or some DM me <a href="https://t.co/EZrF5ZPpGe">pic.twitter.com/EZrF5ZPpGe</a></p>&mdash; JayCarnicomDAP (@jaycarnicomdap) <a href="https://twitter.com/jaycarnicomdap/status/1831818370725114355?ref_src=twsrc%5Etfw">September 5, 2024</a></blockquote>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="password-container" id="passwordPage">
+  <h2>Enter Password</h2>
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button class="enter-button" onclick="checkPassword()">Enter</button>
+  <p id="error" style="color:red; display:none;">Incorrect password. Try again.</p>
+</div>
+
+<div id="protectedContent" style="display:none;">
+  <!-- Your protected content with embedded tweets here -->
 </div>
 
 <script>
+  // Basic calculator functionality
+  function appendToDisplay(value) {
+    document.getElementById("display").value += value;
+  }
+
+  function calculate() {
+    const display = document.getElementById("display");
+    try {
+      display.value = eval(display.value) || "";
+    } catch {
+      display.value = "Error";
+    }
+  }
+
+  // Show password page when login button is clicked
+  function showPasswordPage() {
+    document.getElementById("calculatorPage").style.display = "none";
+    document.getElementById("passwordPage").style.display = "block";
+  }
+
+  // Password validation
   function checkPassword() {
     const enteredPassword = document.getElementById("passwordInput").value;
-    const correctPassword = "vexx8"; // Replace with your password
+    const correctPassword = "vexx8";
 
     if (enteredPassword === correctPassword) {
-      document.querySelector(".password-container").style.display = "none";
+      document.getElementById("passwordPage").style.display = "none";
       document.getElementById("protectedContent").style.display = "block";
     } else {
       document.getElementById("error").style.display = "block";
